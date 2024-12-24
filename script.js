@@ -63,9 +63,6 @@ function fetchRevisions() {
       if (pubRevNumDisplay) {
         pubRevNumDisplay.textContent = pubrevnum; // Set only the revision number
       }
-    })
-    .catch(error =>
-      console.error("Error fetching commits:", error);
     });
 }
 
