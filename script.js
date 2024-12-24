@@ -27,6 +27,48 @@ function drawBall(x, y, radius, color) {
     ctx.fill();
 }
 
+// Fetch and display total commits from GitHub API
+function fetchRevisions() {
+  const owner = "0689436";
+  const repo = "Pong";
+  const branch = "main"; // Replace with your branch name
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/commits?sha=${branch}&per_page=1`;
+
+  fetch(apiUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`GitHub API returned an error: ${response.status}`);
+      }
+
+      // Get the 'Link' header to determine pagination
+      const linkHeader = response.headers.get("Link");
+      let totalCommits;
+
+      if (linkHeader) {
+        const match = linkHeader.match(/&page=(\d+)>; rel="last"/);
+        if (match) {
+          totalCommits = parseInt(match[1], 10);
+        }
+      }
+
+      // If not paginated (only 1 page), get the number of results
+      return response.json().then(data => totalCommits || data.length);
+    })
+    .then(totalCommits => {
+      pubrevnum = totalCommits;
+      console.log("Total Commits:", pubrevnum);
+
+      // Update the displayed revision number
+      const pubRevNumDisplay = document.getElementById("pubrevnum");
+      if (pubRevNumDisplay) {
+        pubRevNumDisplay.textContent = pubrevnum; // Set only the revision number
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching commits:", error);
+    });
+}
+
 function update() {
     if (isGameOver) return;
 
