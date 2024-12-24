@@ -14,7 +14,7 @@ let score = 0;
 let isRGBCelebration = false;
 let rgbTimer = 0;
 let isGameOver = false;
-let pubrevnum = 0;
+let pubrevnum = 0.1;
 
 function drawRect(x, y, width, height, color) {
     ctx.fillStyle = color;
