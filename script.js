@@ -51,11 +51,12 @@ function fetchRevisions() {
         }
       }
 
-      // If not paginated (only 1 page), get the number of results
+      // Parse the JSON response
       return response.json().then(data => totalCommits || data.length);
     })
     .then(totalCommits => {
-      pubrevnum = totalCommits;
+      // Declare and assign the pubrevnum variable
+      const pubrevnum = totalCommits;
       console.log("Total Commits:", pubrevnum);
 
       // Update the displayed revision number
@@ -63,6 +64,10 @@ function fetchRevisions() {
       if (pubRevNumDisplay) {
         pubRevNumDisplay.textContent = pubrevnum; // Set only the revision number
       }
+    })
+    .catch(error => {
+      // Handle errors gracefully
+      console.error("Error fetching revisions:", error);
     });
 }
 
