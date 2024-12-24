@@ -35,6 +35,12 @@ function fetchRevisions() {
   const branch = "main"; // Replace with your branch name
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}/commits?sha=${branch}&per_page=1`;
 
+function fetchRevisions() {
+  const owner = "0689436";
+  const repo = "dot-toucher";
+  const branch = "main"; // Replace with your branch name
+  const apiUrl = `https://api.github.com/repos/${owner}/${repo}/commits?sha=${branch}&per_page=1`;
+
   fetch(apiUrl)
     .then(response => {
       if (!response.ok) {
@@ -65,7 +71,7 @@ function fetchRevisions() {
         pubRevNumDisplay.textContent = pubrevnum; // Set only the revision number
       }
     })
-    .catch(error => {
+    .catch(error =>
       console.error("Error fetching commits:", error);
     });
 }
